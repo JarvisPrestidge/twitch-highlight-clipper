@@ -1,0 +1,38 @@
+# Envrionment variables
+.env
+
+# Dependency directories
+node_modules
+
+# Transpiled js
+dist
+
+# Static assets
+static
+
+# Static assets
+.cache
+
+# Marko compiled files
+**/*.marko.js
+
+# Supporting binaries
+bin/*
+
+# Private secrets
+config/*.ts
+
+# .cache directories
+**/*.cache
+
+# CSV files
+**/*.csv
+
+#ide
+.idea
+
+# using yarn for now
+package-lock.json
+
+# generated CSS
+src/views/css/*
