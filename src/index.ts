@@ -1,31 +1,49 @@
 import * as dotenv from "dotenv";
-
 // Load environment variables
 dotenv.config();
 
+import Twitch from "./twitch";
 import * as ioHook from "iohook";
-import Twitch from "./apis/twitch";
 import db from "./db";
+import * as moment from "moment";
+import { sleep } from "./utils/helpers";
+
+const twitch = new Twitch();
+
+twitch.getAccessToken();
 
 ioHook.start(false);
 
 const CTRL = 29;
-const I = 73;
+const U = 22;
 
-ioHook.registerShortcut([CTRL, I], (keys: any) => {
-    console.log("Shortcut pressed with keys:", keys);
+let lastShortcutDate = moment();
 
-    const twitch = new Twitch();
+ioHook.registerShortcut([CTRL, U], async () => {
 
-    const createClipUrl = twitch.createClip();
+    const isWithinLast30Seconds = moment().isBefore(moment(lastShortcutDate).add("30", "seconds"));
+    if (isWithinLast30Seconds) {
+        return;
+    }
+
+    lastShortcutDate = moment();
+
+    console.log("Shortcut triggered!");
+
+    await sleep(5000);
+
+    const createClipUrl = await twitch.createClip();
 
     console.log(createClipUrl);
 
+    const nowDate = moment().toISOString();
 
-    await db
-        .get("posts")
-        .push({ id: 1, title: "lowdb is awesome" })
+    db
+        .get("clips")
+        .push({ url: createClipUrl, edited: false, createdAt: nowDate })
         .write();
+
+    console.log("Written to db");
 });
 
 console.log("Hook started. Try type something or move mouse");

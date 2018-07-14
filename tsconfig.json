@@ -9,7 +9,8 @@
         "strict": true,
         "declaration": false,
         "noUnusedLocals": true,
-        "noUnusedParameters": true
+        "noUnusedParameters": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "src"

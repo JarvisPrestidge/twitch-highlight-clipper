@@ -1,18 +1,17 @@
-import * as FileAsync from "lowdb/adapters/FileAsync";
+import * as FileSync from "lowdb/adapters/FileSync";
 import * as low from "lowdb";
 import C from "./constants";
-import { existsSync } from "fs";
 
-export default (async () => {
+// Create the db instance
+const adapter = new FileSync(C.DB_PATH);
+const db = low(adapter);
 
-    // Create the db instance
-    const adapter = new FileAsync(C.DB_PATH);
-    const db = await low(adapter);
+// Build default schema if doesn't exist
+const hasAuth = db.has("auth").value();
+const hasClips = db.has("clips").value();
 
-    // Build default schema if doesn't exist
-    if (!existsSync(C.DB_PATH)) {
-        await db.defaults({ clips: [] }).write();
-    }
+if (!hasAuth || !hasClips) {
+    db.defaults({ auth: {}, clips: [] }).write();
+}
 
-    return db;
-})();
+export default db;

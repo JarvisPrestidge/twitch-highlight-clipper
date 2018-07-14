@@ -13,7 +13,7 @@
             "preLaunchTask": "npm: build",
             "program": "${workspaceFolder}/src/index.ts",
             "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
-            "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
+            // "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
             "sourceMaps": true
         }
     ]
