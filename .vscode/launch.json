@@ -7,14 +7,34 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug",
+            "name": "Lloyds Connector Debug",
+            "preLaunchTask": "npm: build",
+            "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
+            "program": "${workspaceFolder}/src/app.ts",
+            "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
+            "sourceMaps": true,
             "protocol": "inspector",
             "outputCapture": "std",
+            "env": {
+                "CONNECTOR": "lloyds",
+                "SHOW_ELECTRON": true
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Halifax Connector Debug",
             "preLaunchTask": "npm: build",
-            "program": "${workspaceFolder}/src/index.ts",
+            "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
+            "program": "${workspaceFolder}/src/app.ts",
             "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
-            // "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
-            "sourceMaps": true
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "outputCapture": "std",
+            "env": {
+                "CONNECTOR": "halifax",
+                "SHOW_ELECTRON": true
+            }
         }
     ]
 }

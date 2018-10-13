@@ -1,0 +1,35 @@
+import * as homeComponent from "../../pages/home"
+import * as fortniteComponent from "../../pages/fortnite"
+import { Router } from "marko-path-router"
+
+class {
+    onCreate() {
+        this.state = {
+            currentRoute: null,
+            previousRoute: null
+        };
+    }
+
+    onMount() {
+        const routes = [
+            { path: "/home", component: homeComponent },
+            { path: "/fortnite", component: fortniteComponent },
+        ];
+
+        const render = Router.renderSync({
+            routes,
+            initialRoute: "/home"
+        });
+
+        const router = this.router = render
+            .appendTo(this.getEl("m-router"))
+            .getComponent()
+
+        router.on("update", () => {
+            this.state.previousRoute = this.state.currentRoute;
+            this.state.currentRoute = router.currentRoute;
+        });
+    }
+}
+
+div id="router" key="m-router" no-update

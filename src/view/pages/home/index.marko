@@ -1,0 +1,19 @@
+import { history } from "marko-path-router"
+
+class {
+    onMount() {
+        console.log("[page-home]: onMount()");
+    }
+}
+
+// Content
+div class="hero-body"
+
+    div class="container has-text-centered"
+        h1 class="title is-size-1" -- Home page
+        h2 class="subtitle" -- Testerino
+
+        section class="section"
+            router-link path="/fortnite" class="button is-primary is-large" -- Fortnite
+
+

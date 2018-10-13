@@ -1,0 +1,21 @@
+html {
+    overflow: hidden;
+}
+
+.level {
+    width: 100vw;
+}
+
+a,
+button {
+    -webkit-app-region: no-drag;
+}
+
+#navbar {
+    -webkit-app-region: drag;
+}
+
+.hero-head,
+.hero-foot {
+    z-index: 999999;
+}

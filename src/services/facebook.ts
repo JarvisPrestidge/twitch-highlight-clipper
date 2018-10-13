@@ -1,15 +1,11 @@
-import * as Koa from "koa";
 import * as moment from "moment";
 import * as request from "request-promise-native";
-import * as Router from "koa-router";
 import C from "./constants";
 import db from "./db";
-import { Context } from "koa";
 import { Headers, Options } from "request";
 import { ITwitchCreateClipResponse } from "./interfaces/ITwitchCreateClipResponse";
 import { ITwitchTokenResponse } from "./interfaces/ITwitchTokenResponse";
 import { launch } from "chrome-launcher";
-import { Server } from "http";
 import { sleep } from "./utils/helpers";
 
 
@@ -24,8 +20,6 @@ class Twitch {
 
     private accessToken?: string;
     private refreshToken?: string;
-    private expiry?: Moment;
-    private server?: Server;
 
     /**
      * Responsible for fetching or refreshing tokens
@@ -37,12 +31,8 @@ class Twitch {
         // Fetch persistent auth values
         this.accessToken = db.get("auth.accessToken").value();
         this.refreshToken = db.get("auth.refreshToken").value();
-        this.expiry = moment(db.get("auth.expiry").value());
 
-        if (!this.accessToken || !this.refreshToken) {
-
-            // Create a server to handle the OAuth flow
-            this.initOAuthServer();
+        if (!this.accessToken && !this.refreshToken) {
 
             // Open chrome tab
             await launch({ startingUrl: C.TWITCH_OAUTH_ENTRY_URI });
@@ -50,53 +40,7 @@ class Twitch {
             while (!this.accessToken || !this.refreshToken) {
                 await sleep(500);
             }
-
-            if (this.server) {
-                this.server = undefined;
-            }
-
-            return;
         }
-
-        if (this.accessToken &&
-            this.refreshToken &&
-            (this.expiry && moment().isAfter(this.expiry.subtract(8, "hours")))
-        ) {
-            this.refreshAccessToken();
-        }
-
-        return;
-    }
-
-    /**
-     * Initiate a Koa server instance to handle the initial OAuth flow
-     *
-     * @returns {Server}
-     */
-    private initOAuthServer(): void {
-
-        const app = new Koa();
-
-        const twitch = new Twitch();
-
-        const router = new Router();
-
-        router.get("/auth", async (ctx: Context) => {
-            const twitchAuthUrl = twitch.getAuthUrl();
-            ctx.redirect(twitchAuthUrl);
-        });
-
-        router.get("/oauth-redirect", async (ctx: Context) => {
-            const code = ctx.query.code;
-            await this.exchangeCodeForToken(code);
-        });
-
-        // Get routes and serve
-        app.use(router.routes());
-
-        app.listen(4000, () => console.log("\nServer started, listening on port 4000..."));
-
-        this.server = app as any;
     }
 
     /**
@@ -104,7 +48,7 @@ class Twitch {
      *
      * @returns {string}
      */
-    public getAuthUrl(): string {
+    public static getAuthUrl(): string {
 
         const baseAuthUri = "https://id.twitch.tv/oauth2/authorize?";
 
