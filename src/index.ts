@@ -6,5 +6,12 @@ import "./server";
 import "./voice";
 // import "./obs/client";
 // import "./hotkey";
+// const twitch = new Twitch();
+
+// twitch.getAccessToken();
+
+import "./obs/client";
+import "./hotkey";
+
 
 console.log("Hook started. Try type something or move mouse");

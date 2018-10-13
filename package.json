@@ -10,21 +10,23 @@
         "build-css": "node-sass src/view/sass/bulma.scss src/view/css/main.css",
         "build": "npm run clean && npm run build-css && ts-node scripts/lasso.ts",
         "dev": "NODE_ENV=development npm run build",
-        "prod": "NODE_ENV=production npm run build"
+        "prod": "NODE_ENV=production npm run build",
+        "start": "node dist/index.js"
     },
     "dependencies": {
         "chrome-launcher": "^0.10.2",
         "dotenv": "^6.0.0",
         "iohook": "^0.2.0",
-        "koa": "^2.5.2",
         "koa-router": "^7.4.0",
         "koa-static": "^5.0.0",
+        "koa": "^2.5.2",
         "lowdb": "^1.0.0",
-        "marko": "^4.4.28",
         "marko-path-router": "^0.7.3",
+        "marko": "^4.4.28",
         "moment": "^2.22.2",
-        "request": "^2.87.0",
+        "obs-websocket-js": "^1.2.0",
         "request-promise-native": "^1.0.5",
+        "request": "^2.87.0",
         "winston": "^3.1.0"
     },
     "devDependencies": {
