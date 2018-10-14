@@ -1,15 +1,9 @@
 import * as moment from "moment";
 import * as request from "request-promise-native";
-import C from "./constants";
-import db from "./db";
+import db from "../db/db";
 import { Headers, Options } from "request";
-import { ITwitchCreateClipResponse } from "./interfaces/ITwitchCreateClipResponse";
-import { ITwitchTokenResponse } from "./interfaces/ITwitchTokenResponse";
-import { launch } from "chrome-launcher";
-import { sleep } from "./utils/helpers";
+import { sleep } from "../utils/helpers";
 
-
-type Moment = moment.Moment;
 
 /**
  * Responsible for interacting with Twitch apis
@@ -35,7 +29,7 @@ class Twitch {
         if (!this.accessToken && !this.refreshToken) {
 
             // Open chrome tab
-            await launch({ startingUrl: C.TWITCH_OAUTH_ENTRY_URI });
+            // await launch({ startingUrl: C.TWITCH_OAUTH_ENTRY_URI });
 
             while (!this.accessToken || !this.refreshToken) {
                 await sleep(500);
@@ -54,8 +48,8 @@ class Twitch {
 
         const authUrl =
             baseAuthUri +
-            `client_id=${C.TWITCH_CLIENT_ID}&` +
-            `redirect_uri=${C.TWITCH_REDIRECT_URI}&` +
+            `client_id=${"insert client id"}&` +
+            `redirect_uri=${"insert redirect uri"}&` +
             "response_type=code&" +
             "scope=clips:edit";
 
@@ -73,9 +67,9 @@ class Twitch {
         const uri = "https://id.twitch.tv/oauth2/token";
 
         const qs: any = {
-            client_id: C.TWITCH_CLIENT_ID,
-            client_secret: C.TWITCH_CLIENT_SECRET,
-            redirect_uri: C.TWITCH_REDIRECT_URI,
+            client_id: "insert here",
+            client_secret: "insert here",
+            redirect_uri: "insert here",
             grant_type: "authorization_code",
             code
         };
@@ -88,7 +82,7 @@ class Twitch {
             json: true
         };
 
-        let response: ITwitchTokenResponse;
+        let response: any;
 
         try {
             response = await request(options);
@@ -108,7 +102,6 @@ class Twitch {
         // Add to class instance
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.expiry = expiry;
 
         return accessToken;
     }
@@ -123,9 +116,9 @@ class Twitch {
         const uri = "https://id.twitch.tv/oauth2/token";
 
         const qs: any = {
-            client_id: C.TWITCH_CLIENT_ID,
-            client_secret: C.TWITCH_CLIENT_SECRET,
-            redirect_uri: C.TWITCH_REDIRECT_URI,
+            client_id: "insert client id",
+            client_secret: "insert client sercret",
+            redirect_uri: "insert redirect uri",
             grant_type: "refresh_token",
             refresh_token: this.refreshToken
         };
@@ -138,7 +131,7 @@ class Twitch {
             json: true
         };
 
-        let response: ITwitchTokenResponse;
+        let response: any;
 
         try {
             response = await request(options);
@@ -158,7 +151,6 @@ class Twitch {
         // Add to class instance
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.expiry = expiry;
 
         return accessToken;
     }
@@ -200,7 +192,7 @@ class Twitch {
             json: true
         };
 
-        let response: ITwitchCreateClipResponse;
+        let response: any;
 
         try {
             response = await request(options);

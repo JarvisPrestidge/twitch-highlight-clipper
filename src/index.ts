@@ -1,17 +1,13 @@
-import * as dotenv from "dotenv";
-// Load environment variables
-dotenv.config();
+import { importEnvironmentVariables, validateEnvironmentVariables } from "./utils/environment";
 
-import "./server";
-import "./voice";
-// import "./obs/client";
-// import "./hotkey";
-// const twitch = new Twitch();
+importEnvironmentVariables();
+validateEnvironmentVariables();
 
-// twitch.getAccessToken();
+import Wakeword from "./voice";
 
-import "./obs/client";
+// tslint:disable-next-line:no-unused-expression
+new Wakeword();
+
 import "./hotkey";
+import "./obs";
 
-
-console.log("Hook started. Try type something or move mouse");

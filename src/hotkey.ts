@@ -1,6 +1,7 @@
 import * as ioHook from "iohook";
 import * as moment from "moment";
-import { startReplayBuffer } from "./obs/client";
+import log from "./utils/logger";
+// import { startReplayBuffer } from "./obs";
 
 ioHook.start(false);
 
@@ -8,8 +9,6 @@ const CTRL = 29;
 const LEFT_BRACKET = 26;
 
 let lastShortcutDate = moment();
-
-// ioHook.on("keydown", event => console.log(event));
 
 ioHook.registerShortcut([CTRL, LEFT_BRACKET], async () => {
 
@@ -23,11 +22,14 @@ ioHook.registerShortcut([CTRL, LEFT_BRACKET], async () => {
 
     lastShortcutDate = moment();
 
-    console.log("Shortcut triggered!");
+    const a = { test: "hello", age: 21 };
 
-    await startReplayBuffer();
 
-    console.log("Toggled OBS replay buffer");
+    log.info("Shortcut triggered!");
+
+    // await startReplayBuffer();
+
+    log.info("Toggled OBS replay buffer", a);
 });
 
-console.log("Hook started");
+log.debug("Keyboard Hook started. Listening for hokeys...");

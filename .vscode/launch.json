@@ -7,34 +7,13 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Lloyds Connector Debug",
+            "name": "Debug Twitch Highlight Clipper",
             "preLaunchTask": "npm: build",
-            "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
-            "program": "${workspaceFolder}/src/app.ts",
+            "program": "${workspaceFolder}/src/index.ts",
             "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
             "sourceMaps": true,
             "protocol": "inspector",
-            "outputCapture": "std",
-            "env": {
-                "CONNECTOR": "lloyds",
-                "SHOW_ELECTRON": true
-            }
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Halifax Connector Debug",
-            "preLaunchTask": "npm: build",
-            "runtimeExecutable": "${workspaceFolder}/scripts/node_2_bunyan.sh",
-            "program": "${workspaceFolder}/src/app.ts",
-            "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
-            "sourceMaps": true,
-            "protocol": "inspector",
-            "outputCapture": "std",
-            "env": {
-                "CONNECTOR": "halifax",
-                "SHOW_ELECTRON": true
-            }
+            "outputCapture": "std"
         }
     ]
 }

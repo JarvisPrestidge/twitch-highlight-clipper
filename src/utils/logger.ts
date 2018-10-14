@@ -1,39 +1,59 @@
-import { createLogger, format, transports } from "winston";
+import C from "./constants";
+import * as winston from "winston";
 import { existsSync, mkdirSync } from "fs";
-import C from "../constants";
+import { join } from "path";
 
+// Create log dir if doesn't exist
 if (!existsSync(C.LOG_PATH)) {
-  mkdirSync(C.LOG_PATH);
+    (mkdirSync as any)(C.LOG_PATH, { recursive: true });
 }
 
-const alignedWithColorsAndTime = format.combine(
-    format.colorize(),
-    format.timestamp(),
-    format.align(),
-    format.prettyPrint()
+/**
+ * Formats the meta object if passed
+ *
+ * @param {object} meta
+ * @returns
+ */
+const metaFormatter = (meta: object) => {
+    const hasValues = Object.keys(meta).length > 0;
+    return hasValues ? `\n${JSON.stringify(meta, null, 4)}` : "";
+};
+
+const consoleFormatter = winston.format.combine(
+    winston.format.align(),
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    winston.format.printf((info) => {
+        const { level, message, timestamp, ...meta } = info;
+        return `[${timestamp}] [${level.toUpperCase()}]: ${message} ${metaFormatter(meta)}`;
+    })
 );
 
-const logger = createLogger({
+const fileFormatter = winston.format.combine(
+    winston.format.align(),
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    winston.format.printf((info) => {
+        const { level, message, timestamp, ...meta } = info;
+        return `[${timestamp}] [${level.toUpperCase()}]: ${message} ${metaFormatter(meta)}`;
+    })
+);
+
+const logger = winston.createLogger({
     transports: [
-        new transports.Console({
-            level: process.env.NODE_ENV === "production" ? "error" : "debug",
+        new winston.transports.Console({
+            level: "debug",
             handleExceptions: true,
-            format: alignedWithColorsAndTime
+            format: consoleFormatter
         }),
-        new transports.File({
-            filename: "debug.log",
+        new winston.transports.File({
+            filename: join(C.LOG_PATH, "info.log"),
             level: "info",
-            format: alignedWithColorsAndTime,
-            handleExceptions: true
+            handleExceptions: true,
+            format: fileFormatter
         })
-    ],
-    exitOnError: false
+    ]
 });
 
-if (process.env.NODE_ENV !== "production") {
-    logger.info("Logging initialized at debug level");
-} else {
-    logger.info("Logging initialized at error level");
-}
+logger.info("Winston logger initialized");
+logger.info(`Logging to ${C.LOG_PATH}`);
 
 export default logger;

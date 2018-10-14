@@ -1,6 +1,6 @@
 import * as FileSync from "lowdb/adapters/FileSync";
 import * as low from "lowdb";
-import C from "../constants";
+import C from "../utils/constants";
 
 // Create the db instance
 const adapter = new FileSync(C.DB_PATH);
