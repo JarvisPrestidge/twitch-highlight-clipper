@@ -3,6 +3,8 @@ import { importEnvironmentVariables, validateEnvironmentVariables } from "./util
 importEnvironmentVariables();
 validateEnvironmentVariables();
 
+
+
 import Wakeword from "./voice";
 
 // tslint:disable-next-line:no-unused-expression

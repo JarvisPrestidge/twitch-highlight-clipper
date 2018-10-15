@@ -6,7 +6,7 @@ import * as envalid from "envalid";
  * @export
  * @returns {Promise<void>}
  */
-export async function importEnvironmentVariables(): Promise<void> {
+export const importEnvironmentVariables = async (): Promise<void> => {
     if (process.env.NODE_ENV === "development") {
         // Conditional import
         const dotenv = await import("dotenv");
@@ -20,7 +20,7 @@ export async function importEnvironmentVariables(): Promise<void> {
  * @export
  * @returns {void}
  */
-export function validateEnvironmentVariables(): void {
+export const validateEnvironmentVariables = (): void => {
     const { cleanEnv, str } = envalid;
 
     const validators = {
@@ -37,7 +37,7 @@ export function validateEnvironmentVariables(): void {
  * @param {string} env
  * @returns {string}
  */
-export function checkEnv(env: string): string {
+export const checkEnv = (env: string): string => {
     const value = process.env[env];
     if (!value) {
         throw new Error(`Required environment variable ${env} needs to be set.`);

@@ -1,17 +1,23 @@
 import * as FileSync from "lowdb/adapters/FileSync";
-import * as low from "lowdb";
+import * as lowdb from "lowdb";
 import C from "../utils/constants";
+import { createDirectory } from "../utils/filesystem";
+import { join } from "path";
+import { IDBSchema } from "../interfaces/db/IDBSchema";
+
+// Create db directory if doesn't exist
+(async () => await createDirectory(C.DB_PATH))();
 
 // Create the db instance
-const adapter = new FileSync(C.DB_PATH);
-const db = low(adapter);
+const sourcePath = join(C.DB_PATH, "db.json");
+const dbAdapter = new FileSync(sourcePath);
+const db = lowdb(dbAdapter);
 
-// Build default schema if doesn't exist
-const hasAuth = db.has("auth").value();
-const hasClips = db.has("clips").value();
+// Initial store state
+const defaults: IDBSchema = {
+    clips: []
+};
 
-if (!hasAuth || !hasClips) {
-    db.defaults({ auth: {}, clips: [] }).write();
-}
+db.defaults(defaults).write();
 
 export default db;

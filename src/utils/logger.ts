@@ -1,12 +1,10 @@
 import C from "./constants";
 import * as winston from "winston";
-import { existsSync, mkdirSync } from "fs";
 import { join } from "path";
+import { createDirectory } from "./filesystem";
 
-// Create log dir if doesn't exist
-if (!existsSync(C.LOG_PATH)) {
-    (mkdirSync as any)(C.LOG_PATH, { recursive: true });
-}
+// Create log directory if doesn't exist
+(async () => await createDirectory(C.LOG_PATH))();
 
 /**
  * Formats the meta object if passed
