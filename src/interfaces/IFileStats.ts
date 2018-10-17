@@ -7,6 +7,7 @@ import { Stats } from "fs";
  * @interface IFileStats
  */
 export interface IFileStats {
-    file: string;
+    fileName: string;
+    filePath: string;
     stats: Stats;
 }

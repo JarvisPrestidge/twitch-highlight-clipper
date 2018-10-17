@@ -9,8 +9,8 @@ import { IDBSchema } from "../interfaces/db/IDBSchema";
 (async () => await createDirectory(C.DB_PATH))();
 
 // Create the db instance
-const sourcePath = join(C.DB_PATH, "db.json");
-const dbAdapter = new FileSync(sourcePath);
+const dbFilePath = join(C.DB_PATH, "db.json");
+const dbAdapter = new FileSync<IDBSchema>(dbFilePath);
 const db = lowdb(dbAdapter);
 
 // Initial store state

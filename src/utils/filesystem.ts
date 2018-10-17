@@ -1,5 +1,6 @@
 import { exists, mkdir, readdir, stat } from "fs";
 import { IFileStats } from "../interfaces/IFileStats";
+import { join } from "path";
 import { promisify } from "util";
 
 const statAsync = promisify(stat);
@@ -29,14 +30,15 @@ export const createDirectory = async (path: string): Promise<void> => {
  * @param {string} path
  * @returns {Promise<IFileStats[]>}
  */
-export const getFileStatsForDirectory = async (path: string): Promise<IFileStats[]> => {
+export const getFileStatsForDirectory = async (directoryPath: string): Promise<IFileStats[]> => {
     const directoryFileStats: IFileStats[] = [];
-    const files = await readdirAsync(path);
-    for (const file of files) {
-        const stats = await statAsync(file);
+    const fileNames = await readdirAsync(directoryPath);
+    for (const fileName of fileNames) {
+        const filePath = join(directoryPath, fileName)
+        const stats = await statAsync(filePath);
         const isFile = stats.isFile();
         if (isFile) {
-            directoryFileStats.push({ file, stats });
+            directoryFileStats.push({ fileName, filePath, stats });
         }
     }
     return directoryFileStats;

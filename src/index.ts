@@ -3,13 +3,12 @@ import { importEnvironmentVariables, validateEnvironmentVariables } from "./util
 importEnvironmentVariables();
 validateEnvironmentVariables();
 
-
+import "./watcher";
 
 import Wakeword from "./voice";
 
 // tslint:disable-next-line:no-unused-expression
 new Wakeword();
 
-import "./hotkey";
-import "./obs";
-
+// import "./hotkey";
+// import "./obs";

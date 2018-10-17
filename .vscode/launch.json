@@ -13,7 +13,10 @@
             "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
             "sourceMaps": true,
             "protocol": "inspector",
-            "outputCapture": "std"
+            "outputCapture": "std",
+            "env": {
+                "NODE_ENV": "development"
+            }
         }
     ]
 }

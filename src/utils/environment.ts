@@ -1,4 +1,5 @@
 import * as envalid from "envalid";
+import * as dotenv from "dotenv";
 
 /**
  * Imports environment variables from local .env file from development only
@@ -6,10 +7,8 @@ import * as envalid from "envalid";
  * @export
  * @returns {Promise<void>}
  */
-export const importEnvironmentVariables = async (): Promise<void> => {
+export const importEnvironmentVariables = (): void => {
     if (process.env.NODE_ENV === "development") {
-        // Conditional import
-        const dotenv = await import("dotenv");
         dotenv.config();
     }
 }
@@ -24,8 +23,8 @@ export const validateEnvironmentVariables = (): void => {
     const { cleanEnv, str } = envalid;
 
     const validators = {
-        // User data folder
-        APPDATA: str()
+        APPDATA: str(),
+        CLIPS_PATH: str()
     };
 
     cleanEnv(process.env, validators);
