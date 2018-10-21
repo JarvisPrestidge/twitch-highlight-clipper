@@ -1,14 +1,18 @@
-import { importEnvironmentVariables, validateEnvironmentVariables } from "./utils/environment";
+import "./init";
 
-importEnvironmentVariables();
-validateEnvironmentVariables();
 
-import "./watcher";
+/**
+ * Main application entry point
+ *
+ * @returns {Promise<void>}
+ */
+const application = async (): Promise<void> => {
 
-import Wakeword from "./voice";
+    await import("./obs");
+    await import("./voice");
+    await import("./watcher");
 
-// tslint:disable-next-line:no-unused-expression
-new Wakeword();
+};
 
-// import "./hotkey";
-// import "./obs";
+
+application();

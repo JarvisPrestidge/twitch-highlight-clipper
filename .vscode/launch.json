@@ -17,6 +17,19 @@
             "env": {
                 "NODE_ENV": "development"
             }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Insta-Debug Twitch Highlight Clipper",
+            "program": "${workspaceFolder}/src/index.ts",
+            "outFiles": [ "${workspaceFolder}/dist/**/*.js" ],
+            "sourceMaps": true,
+            "protocol": "inspector",
+            "outputCapture": "std",
+            "env": {
+                "NODE_ENV": "development"
+            }
         }
     ]
 }

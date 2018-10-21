@@ -1,6 +1,6 @@
 import { exists, mkdir, readdir, stat } from "fs";
 import { IFileStats } from "../interfaces/IFileStats";
-import { join } from "path";
+import { join, basename } from "path";
 import { promisify } from "util";
 
 const statAsync = promisify(stat);
@@ -42,4 +42,22 @@ export const getFileStatsForDirectory = async (directoryPath: string): Promise<I
         }
     }
     return directoryFileStats;
+};
+
+/**
+ * Get stats for a single file
+ *
+ * @export
+ * @param {string} filePath
+ * @returns {Promise<IFileStats>}
+ */
+export const getFileStats = async (filePath: string): Promise<IFileStats> => {
+    const stats = await statAsync(filePath);
+    const fileName = basename(filePath);
+    const fileStats: IFileStats = {
+        fileName,
+        filePath,
+        stats
+    };
+    return fileStats;
 };

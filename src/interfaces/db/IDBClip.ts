@@ -6,6 +6,7 @@
  * @interface IDBClip
  */
 export interface IDBClip {
+    id: number;
     fileName: string;
     filePath: string;
     size: number;

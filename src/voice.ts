@@ -86,7 +86,7 @@ class Wakeword {
             log.info(`[WAKEWORD-VOICE-COMMAND] successfully detected: ${keyword}`);
             log.info("Need to implement")
         }
-};
+    }
 
     /**
      * Kill the wakeword python child process
@@ -101,4 +101,4 @@ class Wakeword {
     }
 };
 
-export default Wakeword;
+export default new Wakeword();

@@ -49,4 +49,4 @@ const connectToOBS = async (): Promise<void> => {
     }
 };
 
-connectToOBS();
+export default connectToOBS();
