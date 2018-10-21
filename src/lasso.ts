@@ -2,7 +2,7 @@ import * as lasso from "lasso";
 import C from "./utils/constants";
 
 // Required before importing Marko templates
-require("marko/node-require").install();
+require("marko/node-require");
 
 // Require marko plugin
 const lassoMarkoPlugin = require("lasso-marko");

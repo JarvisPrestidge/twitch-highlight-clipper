@@ -5,12 +5,14 @@ import { Router } from "marko-path-router"
 class {
     onCreate() {
         this.state = {
-            currentRoute: null,
-            previousRoute: null
+            currentRoute: null
         };
     }
 
     onMount() {
+
+        this.state.currentRoute = window.location.pathname;
+
         const routes = [
             { path: "/home", component: homeComponent },
             { path: "/fortnite", component: fortniteComponent },
@@ -23,10 +25,9 @@ class {
 
         const router = this.router = render
             .appendTo(this.getEl("m-router"))
-            .getComponent()
+            .getComponent();
 
         router.on("update", () => {
-            this.state.previousRoute = this.state.currentRoute;
             this.state.currentRoute = router.currentRoute;
         });
     }
