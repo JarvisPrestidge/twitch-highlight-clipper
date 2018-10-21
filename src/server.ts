@@ -1,15 +1,13 @@
 import * as Koa from "koa";
-import * as serve from "koa-static";
 import * as logger from "koa-logger";
+import * as serve from "koa-static";
+import C from "./utils/constants";
+import clips from "./routes/api/clipRouter";
 import log from "./utils/logger";
+import spa from "./routes/web/spaRouter";
 
 // Required before importing Marko templates
 require("marko/node-require");
-
-// TODO: add api routes
-// import api from "./routes/api/api";
-// TODO: add spa routes
-// import spa from "./routes/web/spa";
 
 // Create new koa webserver instance
 const app = new Koa();
@@ -17,14 +15,15 @@ const app = new Koa();
 // Add logging middleware
 app.use(logger());
 
-
 // Add stats routing
-// TODO: use routes
-// app.use(api.routes());
-// app.use(api.allowedMethods());
+app.use(clips.routes());
+app.use(clips.allowedMethods());
+
+app.use(spa.routes());
+app.use(spa.allowedMethods());
 
 // Serve static files
-app.use(serve(__dirname + "/static"));
+app.use(serve(C.STATIC_PATH));
 // Start server
 
-app.listen(() => log.info("listening on port 5000..."));
+app.listen(5000, () => log.info("listening on port 5000..."));

@@ -89,6 +89,23 @@ class Clip implements Partial<IDBClip> {
         }
         return result ? true : false;
     }
+
+    /**
+     * Returns boolean indicated if a clip exists
+     *
+     * @static
+     * @param {*} predicate
+     * @returns {Promise<boolean>}
+     */
+    public static async all(): Promise<Clip[]> {
+        let result: Clip[] = [];
+        try {
+            result = await db.listGet<Clip>(Clip.COLLECTION_KEY);
+        } catch (error) {
+            log.error("[CLIP-ERROR]: exception occurred while attempting to get all clips", error);
+        }
+        return result;
+    }
 }
 
 export default Clip;

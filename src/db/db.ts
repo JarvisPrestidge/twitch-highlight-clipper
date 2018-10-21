@@ -4,6 +4,7 @@ import C from "../utils/constants";
 import { createDirectory } from "../utils/filesystem";
 import { IDBSchema } from "../interfaces/db/IDBSchema";
 import { join } from "path";
+import log from "../utils/logger";
 
 /**
  * Database Store
@@ -20,6 +21,9 @@ class DB {
      * @returns {Promise<void>}
      */
     public async init(): Promise<void> {
+
+        log.info("[DB-INIT]: start");
+
         // Create db directory if doesn't exist
         await createDirectory(C.DB_PATH);
 
@@ -35,6 +39,8 @@ class DB {
 
         // Initialize store
         await this.db.defaults(defaults).write();
+
+        log.info("[DB-INIT]: finish");
     }
 
     /**

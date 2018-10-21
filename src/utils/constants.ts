@@ -14,6 +14,7 @@ class Constants {
     // Paths
     public static readonly PROJECT_ROOT = join(__dirname, "..", "..");
     public static readonly PYTHON_PATH = join(Constants.PROJECT_ROOT, "python");
+    public static readonly STATIC_PATH = join(Constants.PROJECT_ROOT, "static");
     public static readonly DB_PATH = join(checkEnv("APPDATA"), Constants.APP_NAME, "db");
     public static readonly LOG_PATH = join(checkEnv("APPDATA"), Constants.APP_NAME, "logs");
     public static readonly CLIPS_PATH = join(checkEnv("CLIPS_PATH"));

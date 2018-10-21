@@ -4,7 +4,15 @@ import { importEnvironmentVariables, validateEnvironmentVariables } from "./util
 importEnvironmentVariables();
 validateEnvironmentVariables();
 
-import db from "./db/db";
-
 // Initialize database
-(async () => db.init())();
+(async () => {
+    const db = await import("./db/db");
+    await db.default.init();
+})();
+
+// Initialize Advanced module bundler, asset pipeline and optimizer
+import "./lasso";
+
+// Initialize Server
+import "./server";
+

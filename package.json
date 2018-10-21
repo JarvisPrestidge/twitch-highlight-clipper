@@ -9,8 +9,9 @@
         "clean-marko": "find src -type f -name '*.marko.js' -delete",
         "generate-css": "node-sass src/view/sass/bulma.scss src/view/css/main.css",
         "tsc": "tsc -p .",
+        "copy-static-files": "cp -R src/view dist",
         "lasso": "ts-node scripts/lasso.ts",
-        "build": "npm run clean && npm run tsc && npm run generate-css && npm run lasso",
+        "build": "npm run clean && npm run tsc && npm run generate-css && npm run copy-static-files",
         "dev": "NODE_ENV=development npm run build",
         "prod": "NODE_ENV=production npm run build",
         "start": "node dist/index.js"
@@ -30,8 +31,6 @@
         "marko-path-router": "^0.7.3",
         "moment": "^2.22.2",
         "obs-websocket-js": "^1.2.0",
-        "request": "^2.87.0",
-        "request-promise-native": "^1.0.5",
         "winston": "^3.1.0"
     },
     "devDependencies": {
@@ -45,14 +44,11 @@
         "@types/lasso": "^2.4.0",
         "@types/lowdb": "^1.0.3",
         "@types/node": "10",
-        "@types/request": "^2.47.1",
-        "@types/request-promise-native": "^1.0.15",
         "bulma": "^0.7.1",
         "bulma-extensions": "^1.0.14",
         "lasso": "^3.1.4",
         "lasso-marko": "^2.4.0",
         "node-sass": "^4.9.0",
-        "ts-node": "^6.0.0",
         "tslint": "^5.10.0",
         "tslint-config-prettier": "^1.13.0",
         "typescript": "^2.9.2"

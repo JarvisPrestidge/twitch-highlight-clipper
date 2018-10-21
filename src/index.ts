@@ -1,6 +1,5 @@
 import "./init";
 
-
 /**
  * Main application entry point
  *
